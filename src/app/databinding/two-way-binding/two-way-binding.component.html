@@ -1,0 +1,18 @@
+<h3>4.Methode: Two-Way-Binding</h3>
+<div>
+  <label>Firstname:</label>
+  <input type="text" [(ngModel)]="firstname" [ngModelOptions]="{updateOn: 'change'}">
+</div>
+<h4>{{ firstname }}</h4>
+
+<div>
+  <label>Lastname:</label>
+  <input type="text" #lastname (change)="lastname">
+</div>
+<h4>{{ lastname.value }}</h4>
+
+<div>
+  <label>Email:</label>
+  <input type="text" [ngModel]="email" (ngModelChange)="email" [ngModelOptions]="{updateOn: 'change'}">
+</div>
+<h4>{{ email }}</h4>

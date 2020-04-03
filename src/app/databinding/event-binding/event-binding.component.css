@@ -1,0 +1,10 @@
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: lightskyblue;
+}
+
+div {
+  padding: 15px 15px;
+  margin: 15px 15px;
+}

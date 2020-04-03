@@ -5,8 +5,9 @@ import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { AnotherComponent } from './other/another.component';
 import { DatabindingComponent } from './databinding/databinding.component';
-import { PropertyBindingComponent } from './databinding/property-binding.component';
-import { EventBindingComponent } from './databinding/event-binding.component';
+import { PropertyBindingComponent } from './databinding/property-binding/property-binding.component';
+import { EventBindingComponent } from './databinding/event-binding/event-binding.component';
+import { TwoWayBindingComponent } from './databinding/two-way-binding/two-way-binding.component';
 import { FormsModule } from '@angular/forms';
 import { LifecycleComponent } from './lifecycle.component';
 import { HeaderComponent } from './header.component';
@@ -32,6 +33,7 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
     DatabindingComponent,
     PropertyBindingComponent,
     EventBindingComponent,
+    TwoWayBindingComponent,
     LifecycleComponent,
     HeaderComponent,
     RecipeComponent,

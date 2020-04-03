@@ -1,0 +1,14 @@
+<h3>3.Methode: Event-Binding</h3>
+<div>
+  <button (click)="onClick($event)">get console.log($event)</button>
+</div>
+
+<div>
+  <label>Firstname: </label>
+  <input type="text" (focusout)="onClick($event)">
+</div>
+
+<div>
+  <button (click)="onClick1($event)">{{ showBox ? 'Hide' : 'Show' }} BOX</button>
+  <div [ngClass]="{'box' : showBox}"></div>
+</div>
