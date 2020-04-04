@@ -6,13 +6,13 @@ import {Component, ContentChild, ElementRef, ViewChild} from '@angular/core';
   styleUrls: ['./other.component.css']
 })
 export class OtherComponent {
-  @ViewChild('i') input: ElementRef;
-  @ContentChild('p') paragraph: ElementRef;
+  // @ViewChild('i') input: ElementRef;
+  // @ContentChild('p') paragraph: ElementRef;
 
   constructor() {
     setTimeout(() => {
-      this.input.nativeElement.value = 'value override!';
-      this.paragraph.nativeElement.innerText = 'should be override too!';
+      // this.input.nativeElement.value = 'value override!';
+      // this.paragraph.nativeElement.innerText = 'should be override too!';
     }, 3000);
   }
 }

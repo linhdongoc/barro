@@ -1,20 +1,37 @@
 <header>
-  <ul class="nav nav-pills">
-    <li role="presentation" routerLinkActive="active"><a [routerLink]="['/rezepte']">Rezeptbuch</a></li>
-    <li role="presentation" routerLinkActive="active"><a [routerLink]="['/einkaufsliste']">Einkaufsliste</a></li>
-    <li>
-      <div class="dropdown" appDropdown>
-        <button id="dLabel" type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-primary">
-          Verwaltung
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dLabel">
-          <li><a href="#">Speichern</a></li>
-          <li><a href="#">Laden</a></li>
-        </ul>
-      </div>
-    </li>
-    <li role="presentation" routerLinkActive="active"><a [routerLink]="['/udemy']">Udemy Übungen</a></li>
-  </ul>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/rezepte']">Rezeptbuch </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/einkaufsliste']">Einkaufsliste</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Verwaltung
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Speichern</a>
+            <a class="dropdown-item" href="#">Laden</a>
+          </div>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/udemy']">Udemy</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/productList']">ProductList</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>
 <hr>
