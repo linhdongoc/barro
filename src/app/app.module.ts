@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // router
 import { routing } from './app.routing';
@@ -24,14 +25,15 @@ import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.comp
 import { RecipeStartComponent } from './recipe/recipe-start.component';
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
+import { StarComponent } from './shared/star/star.component';
 
 // directivies
 import { HighlightDirective } from './highlight.directive';
 import { UnlessDirective } from './unless.directive';
 import { DropdownDirective } from './dropdown.directive';
 
-// services
-import {ShoppingListService} from './shopping-list/shopping-list.service';
+// pipe
+import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 
 @NgModule({
   declarations: [
@@ -56,13 +58,15 @@ import {ShoppingListService} from './shopping-list/shopping-list.service';
     HighlightDirective,
     UnlessDirective,
     DropdownDirective,
+    ConvertToSpacesPipe,
+    StarComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    routing
+    routing,
+    HttpClientModule
   ],
-  providers: [ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
