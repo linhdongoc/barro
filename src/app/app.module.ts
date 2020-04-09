@@ -26,6 +26,8 @@ import { RecipeStartComponent } from './recipe/recipe-start.component';
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { StarComponent } from './shared/star/star.component';
+import { ProductDetailComponent } from './products/product-detail/product-detail.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // directivies
 import { HighlightDirective } from './highlight.directive';
@@ -34,7 +36,6 @@ import { DropdownDirective } from './dropdown.directive';
 
 // pipe
 import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,8 @@ import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
     DropdownDirective,
     ConvertToSpacesPipe,
     StarComponent,
+    ProductDetailComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
