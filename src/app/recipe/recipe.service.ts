@@ -1,6 +1,8 @@
 import {Recipe} from './recipe.model';
 import {Ingredient} from '../shared/ingredient.model';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class RecipeService {
   private recipes: Recipe[] = [
     new Recipe('Schnitzel', 'loremipsum', 'https://picsum.photos/id/237/300/200',
