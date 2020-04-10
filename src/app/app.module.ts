@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // router
 import { routing } from './app.routing';
@@ -63,7 +64,8 @@ import { ProductModule } from './products/product.module';
     FormsModule,
     routing,
     HttpClientModule,
-    ProductModule
+    ProductModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent]
 })
