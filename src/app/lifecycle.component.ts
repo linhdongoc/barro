@@ -10,6 +10,7 @@ import {
   OnInit, SimpleChanges
 } from '@angular/core';
 
+// tslint:disable-next-line:no-conflicting-lifecycle
 @Component({
   selector: 'app-lifecycle',
   template: `
