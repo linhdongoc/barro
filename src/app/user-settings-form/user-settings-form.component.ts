@@ -9,11 +9,16 @@ import { IUserSettings } from './user-settings';
 export class UserSettingsFormComponent {
   pageTitle = 'User Settings';
   originalUserSettings: IUserSettings = {
-    name: 'Milton',
-    emailOffers: true,
-    interfaceStyle: 'dark',
-    subscriptionType: 'Annual',
-    notes: 'here are some notes ...'
+    // name: 'Milton',
+    // emailOffers: true,
+    // interfaceStyle: 'dark',
+    // subscriptionType: 'Annual',
+    // notes: 'here are some notes ...'
+    name: null,
+    emailOffers: null,
+    interfaceStyle: null,
+    subscriptionType: null,
+    notes: null
   };
   userSettings: IUserSettings = { ...this.originalUserSettings };
 }

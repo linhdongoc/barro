@@ -1,12 +1,20 @@
 <div class="container">
   <h4>{{ pageTitle }}</h4>
-  <form #form="ngForm">
+  <form #form="ngForm" ngNativeValidate>
     <div class="form-group">
       <label for="name">Name</label>
       <input id="name" name="name" class="form-control" placeholder="Name"
-             [(ngModel)]="userSettings.name">
+             [(ngModel)]="userSettings.name" required #propertyTest="ngModel">
     </div>
-
+    <i>{{ propertyTest.className }}</i>
+    <ul>
+      <li>dirty: {{ propertyTest.dirty }}</li>
+      <li>pristine: {{ propertyTest.pristine }}</li>
+      <li>touched: {{ propertyTest.touched }}</li>
+      <li>untouched: {{ propertyTest.untouched }}</li>
+      <li>valid: {{ propertyTest.valid }}</li>
+      <li>invalid: {{ propertyTest.invalid }}</li>
+    </ul>
     <div class="form-check form-group">
       <input type="checkbox" class="form-check-input"
              id="emailOffers" name="emailOffers"
