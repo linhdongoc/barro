@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  pageTitle: 'Product Detail';
+  pageTitle = 'Product Detail';
   product: IProduct;
 
   constructor(private route: ActivatedRoute,
@@ -18,7 +18,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.pageTitle += `: ${id}`;
+    this.pageTitle += ` ${id}`;
     this.product = {
       productId: id,
       productName: 'Leaf Rake',

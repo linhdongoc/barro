@@ -25,6 +25,7 @@ import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.comp
 import { RecipeStartComponent } from './recipe/recipe-start.component';
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserSettingsFormComponent } from './user-settings-form/user-settings-form.component';
 
 // directivies
 import { HighlightDirective } from './highlight.directive';
@@ -57,6 +58,7 @@ import { ProductModule } from './products/product.module';
     UnlessDirective,
     DropdownDirective,
     PageNotFoundComponent,
+    UserSettingsFormComponent,
   ],
   imports: [
     BrowserModule,
