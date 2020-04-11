@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IUserSettings } from './user-settings';
+import { NgForm, NgModel } from '@angular/forms';
+import { UserSettingsService } from './user-settings.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-user-settings-form',
   templateUrl: './user-settings-form.component.html',
   styleUrls: ['./user-settings-form.component.css']
 })
-export class UserSettingsFormComponent {
+export class UserSettingsFormComponent implements OnInit {
   pageTitle = 'User Settings';
   originalUserSettings: IUserSettings = {
     // name: 'Milton',
@@ -21,4 +25,32 @@ export class UserSettingsFormComponent {
     notes: null
   };
   userSettings: IUserSettings = { ...this.originalUserSettings };
+  postError =  false;
+  postErrorMessage: string;
+  subscriptionTypes: Observable<string[]>;
+
+  constructor(private userSettingsService: UserSettingsService) { }
+
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      this.userSettingsService.postUserSettingsForm(this.userSettings).subscribe(
+        result => console.log('success', result),
+        error => this.onHttpError(error)
+      );
+    } else {
+      this.postError = true;
+      this.postErrorMessage = 'Please fix the above errors';
+    }
+  }
+
+  onBlur(nameField: NgModel) { }
+
+  onHttpError(errorResponse: any) {
+    this.postError = true;
+    this.postErrorMessage = errorResponse.error.errorMessage;
+  }
+
+  ngOnInit(): void {
+    this.subscriptionTypes = this.userSettingsService.getSubscriptionTypes();
+  }
 }
