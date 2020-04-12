@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // router
 import { routing } from './app.routing';
@@ -26,6 +26,7 @@ import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.comp
 import { RecipeStartComponent } from './recipe/recipe-start.component';
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserSettingsFormComponent } from './user-settings-form/user-settings-form.component';
 
 // directivies
 import { HighlightDirective } from './highlight.directive';
@@ -34,6 +35,10 @@ import { DropdownDirective } from './dropdown.directive';
 
 // module
 import { ProductModule } from './products/product.module';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 @NgModule({
   declarations: [
@@ -58,14 +63,19 @@ import { ProductModule } from './products/product.module';
     UnlessDirective,
     DropdownDirective,
     PageNotFoundComponent,
+    UserSettingsFormComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     routing,
     HttpClientModule,
     ProductModule,
-    BrowserAnimationsModule
+    ButtonsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
+    RatingModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductDetailGuard } from './products/product-detail/product-detail.guard';
+import { UserSettingsFormComponent } from './user-settings-form/user-settings-form.component';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/rezepte', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const APP_ROUTES: Routes = [
     canActivate: [ProductDetailGuard],
     component: ProductDetailComponent
   },
+  { path: 'usersettings', component: UserSettingsFormComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
