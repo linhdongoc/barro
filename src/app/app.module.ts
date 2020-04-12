@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,6 +35,10 @@ import { DropdownDirective } from './dropdown.directive';
 
 // module
 import { ProductModule } from './products/product.module';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 @NgModule({
   declarations: [
@@ -62,10 +67,15 @@ import { ProductModule } from './products/product.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     routing,
     HttpClientModule,
-    ProductModule
+    ProductModule,
+    ButtonsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
+    RatingModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })
