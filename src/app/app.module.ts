@@ -39,6 +39,9 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { MaterialModule } from './shared/material.module';
+import { DemoModule } from './demo/demo.module';
+import { ContactmanagerModule } from './contactmanager/contactmanager.module';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,10 @@ import { RatingModule } from 'ngx-bootstrap/rating';
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
-    RatingModule.forRoot()
+    RatingModule.forRoot(),
+    MaterialModule,
+    DemoModule,
+    ContactmanagerModule
   ],
   bootstrap: [AppComponent]
 })

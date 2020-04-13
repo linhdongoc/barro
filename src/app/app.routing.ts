@@ -8,6 +8,8 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductDetailGuard } from './products/product-detail/product-detail.guard';
 import { UserSettingsFormComponent } from './user-settings-form/user-settings-form.component';
+import { DemoModule } from './demo/demo.module';
+import { ContactmanagerModule } from './contactmanager/contactmanager.module';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/rezepte', pathMatch: 'full' },
@@ -20,6 +22,8 @@ const APP_ROUTES: Routes = [
     component: ProductDetailComponent
   },
   { path: 'usersettings', component: UserSettingsFormComponent },
+  { path: 'demo', loadChildren: './demo/demo.module#DemoModule' },
+  { path: 'contactmanager', loadChildren: './contactmanager/contactmanager.module#ContactmanagerModule' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
