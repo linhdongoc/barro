@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 // router
@@ -27,6 +27,7 @@ import { RecipeStartComponent } from './recipe/recipe-start.component';
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserSettingsFormComponent } from './user-settings-form/user-settings-form.component';
+import { CustomerComponent } from './customers/customer/customer.component';
 
 // directivies
 import { HighlightDirective } from './highlight.directive';
@@ -64,11 +65,13 @@ import { RatingModule } from 'ngx-bootstrap/rating';
     DropdownDirective,
     PageNotFoundComponent,
     UserSettingsFormComponent,
+    CustomerComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     routing,
     HttpClientModule,
     ProductModule,
