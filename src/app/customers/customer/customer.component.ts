@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
 import { Customer } from '../customer';
 
 @Component({
@@ -15,9 +15,15 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerForm = this.fb.group({
-      firstName: '',
-      lastName: {value: 'n.a', disabled: true},
-      email: '',
+      firstName: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', [Validators.required, Validators.maxLength(50)]],
+      emailGroup: this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        confirmEmail: ['', Validators.required, Validators.email],
+      }, { validator: emailMatcher }),
+      phone: '',
+      notification: 'email',
+      rating: [null, ratingRangWithOptions(1,5)],
       sendCatalog: true
     })
   }
@@ -31,8 +37,48 @@ export class CustomerComponent implements OnInit {
     this.customerForm.patchValue({
       firstName: 'Max',
       lastName: 'Mustermann',
-      email: 'max.mustermann@example.de',
+      emailGroup: {
+        email: 'max.mustermann@example.de'
+      },
       sendCatalog: false
     })
   }
+
+  setNotification(notifyVia: string): void {
+    const phoneControl = this.customerForm.get('phone');
+    if (notifyVia === 'text') {
+      phoneControl.setValidators(Validators.required);
+    } else {
+      phoneControl.clearValidators();
+    }
+    phoneControl.updateValueAndValidity();
+  }
+}
+
+function ratingRang(c: AbstractControl): { [key: string]: boolean } | null {
+  if (c.value !== null && (isNaN(c.value) || c.value < 1 || c.value > 5)) {
+    return { range: true };
+  }
+  return null;
+}
+
+function ratingRangWithOptions(min: number, max: number): ValidatorFn {
+  return (c: AbstractControl): { [key: string]: boolean } | null => {
+    if (c.value !== null && (isNaN(c.value) || c.value < min || c.value > max)) {
+      return { range: true };
+    }
+    return null;
+  };
+}
+
+function emailMatcher(c: AbstractControl): { [key: string]: boolean } | null {
+  const emailControl = c.get('email');
+  const confirmEmailControl = c.get('confirmEmail');
+  if (emailControl.pristine || confirmEmailControl.pristine) {
+    return null;
+  }
+  if (emailControl.value === confirmEmailControl.value) {
+    return null;
+  }
+  return { match: true };
 }
