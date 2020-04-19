@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { IProduct } from '../product';
 import { ProductService } from '../product.service';
 
@@ -12,10 +13,9 @@ export class ProductListComponent implements OnInit {
   imageWidth = 50;
   imageMargin = 2;
   showImage = false;
-  errorMessage: string;
+  errorMessage = '';
 
-  // tslint:disable-next-line:variable-name
-  _listFilter: string;
+  _listFilter = '';
   get listFilter(): string {
     return this._listFilter;
   }
@@ -23,19 +23,18 @@ export class ProductListComponent implements OnInit {
     this._listFilter = value;
     this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
   }
-  filteredProducts: IProduct[];
+
+  filteredProducts: IProduct[] = [];
   products: IProduct[] = [];
 
   // the class constructor is a function that is executed when the component is first initialized
-  constructor(private productService: ProductService) {
-  }
+  constructor(private productService: ProductService) { }
 
   toggleImage(): void {
     this.showImage = !this.showImage;
   }
 
   ngOnInit(): void {
-    console.log('ProductList >> OnInit');
     this.productService.getProducts().subscribe({
       next: products => {
         this.products = products;
