@@ -9,6 +9,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductDetailGuard } from './products/product-detail/product-detail.guard';
 import { UserSettingsFormComponent } from './user-settings-form/user-settings-form.component';
 import { CustomerComponent } from './customers/customer/customer.component';
+import { ProductEditComponent } from './products/product-edit/product-edit.component';
+import { ProductEditGuard } from './products/product-edit/product-edit.guard';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/rezepte', pathMatch: 'full' },
@@ -19,6 +21,11 @@ const APP_ROUTES: Routes = [
   { path: 'products/:id',
     canActivate: [ProductDetailGuard],
     component: ProductDetailComponent
+  },
+  {
+    path: 'products/:id/edit',
+    canDeactivate: [ProductEditGuard],
+    component: ProductEditComponent
   },
   { path: 'usersettings', component: UserSettingsFormComponent },
   { path: 'customer', component: CustomerComponent },

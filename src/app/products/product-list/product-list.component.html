@@ -15,27 +15,32 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table" *ngIf="products && products.length">
+      <table class="table mb-0"
+             *ngIf="products && products.length">
         <thead>
           <tr>
             <th>
-              <button class="btn btn-primary" (click)="toggleImage()">{{ showImage ? 'Hide' : 'Show'}} Image</button>
+              <button class="btn btn-primary"
+                      (click)="toggleImage()">
+                {{ showImage ? 'Hide' : 'Show'}} Image
+              </button>
             </th>
             <th>Product</th>
             <th>Code</th>
             <th>Available</th>
             <th>Price</th>
             <th>5 Star Rating</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of filteredProducts">
             <td>
-              <img [src]="product.imageUrl"
+              <img *ngIf="showImage && product.imageUrl"
+                   [src]="product.imageUrl"
                    [title]="product.productName"
                    [style.width.px]="imageWidth"
                    [style.margin.px]="imageMargin"
-                   *ngIf="showImage"
               >
             </td>
             <td>
@@ -43,10 +48,18 @@
                 {{ product.productName }}
               </a>
             </td>
-            <td>{{ product.productCode | lowercase | convertToSpaces: '-' }}</td>
+            <td>{{ product.productCode }}</td>
             <td>{{ product.releaseDate }}</td>
             <td>{{ product.price | currency:'USD':'symbol':'1.2-2'}}</td>
-            <td><app-star [rating]="product.starRating" (ratingClicked)="onRatingClicked($event)"></app-star></td>
+            <td>
+              <app-star [rating]="product.starRating"></app-star>
+            </td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm"
+                      [routerLink]="['/products', product.productId, 'edit']">
+                Edit
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
