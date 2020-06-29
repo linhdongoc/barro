@@ -1,4 +1,5 @@
-# Barro
+# Barro 
+![Build CI](https://github.com/linhdongoc/barro/workflows/Build%20CI/badge.svg?branch=master)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
