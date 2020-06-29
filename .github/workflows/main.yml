@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -16,18 +16,49 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
+    - uses: actions/checkout@v1
 
     # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+
+    ## optimize build speed by caching our NPM node_modules.
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    # Runs a single command using the runners shell
+    - name: Install dependencies
+      run: npm i
+
+    #- name: Lint
+    #  run: npm run lint
+
+    - name: Build
+      run: npm run build -- --prod
+
+    #- name: Test
+    #  run: npm test -- --configuration=ci
+
+    #- name: E2E
+    #  run: npm run e2e -- --configuration=ci
+
+    #- name: Push Build to Releases
+    #  uses: ncipollo/release-action@v1
+    #  with:
+    #    artifacts: "dist/angular-githubaction/*"
+    #    token: ${{ secrets.TOKEN }}
