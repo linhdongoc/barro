@@ -1,36 +1,40 @@
 # Barro 
+
 ![Build CI](https://github.com/linhdongoc/barro/workflows/Build%20CI/badge.svg?branch=master)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+### System
+angular cli 9.1.7
+typescript 3.8.3
+webpack 4.42.0
+rxjs 6.5.5
 
-## Development server
+### Development server
+~~~
+ng serve
+~~~
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Code scaffolding
+~~~
+ng generate component component-name
+ng generate directive|pipe|service|class|guard|interface|enum|module
+~~~
 
-## Code scaffolding
+### Build
+~~~
+ng build
+ng build --prod
+~~~
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Running tests
+~~~
+ng test
+ng e2e
+~~~
 
 ### Upgrade package-lock.json
-```
+~~~
 npm update
 npm audit fix
 
 yarn upgrade
-```
+~~~
