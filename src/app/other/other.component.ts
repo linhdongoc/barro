@@ -3,7 +3,7 @@ import {Component, ContentChild, ElementRef, ViewChild} from '@angular/core';
 @Component({
   selector: 'app-other',
   templateUrl: './other.component.html',
-  styleUrls: ['./other.component.css']
+  styleUrls: ['./other.component.scss']
 })
 export class OtherComponent {
   // @ViewChild('i') input: ElementRef;
