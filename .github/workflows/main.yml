@@ -28,6 +28,6 @@ jobs:
     - name: Install dependencies
       run: npm i
     - name: Run lint
-      run: ng lint
+      run: npm run lint
     - name: Build
-      run: ng build --prod
+      run: npm run build -- --prod
