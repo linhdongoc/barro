@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { routing } from '../../app-routing.module';
+import { routing } from '@app/app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';

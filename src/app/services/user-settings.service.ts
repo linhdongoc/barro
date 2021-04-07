@@ -7,7 +7,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserSettingsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   postUserSettingsForm(userSettings: IUserSettings): Observable<any> {
     return this.http.post('https://putsreq.com/QBa1sIGyJyeB7723Dthx', userSettings);
