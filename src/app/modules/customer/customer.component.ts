@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
-import { Customer } from '../../models/customer.model';
+import { Customer } from '@app/models/customer.model';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({

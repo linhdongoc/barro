@@ -1,4 +1,4 @@
-import {Component, ContentChild, ElementRef, ViewChild} from '@angular/core';
+import { Component, ContentChild, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-other',

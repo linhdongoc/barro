@@ -1,15 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChildren} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators} from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import {Observable, Subscription, fromEvent, merge} from 'rxjs';
+import { Observable, Subscription, fromEvent, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-
-import { IProduct } from '../../../interfaces/product.interface';
-import { ProductService } from '../../../services/product.service';
-import { GenericValidator } from '../../../models/generic-validator.model';
-import {NumberValidators} from '../../../validators/number.validator';
-
+import { IProduct } from '@app/interfaces/product.interface';
+import { ProductService } from '@app/services/product.service';
+import { GenericValidator } from '@app/models/generic-validator.model';
+import { NumberValidators } from '@app/validators/number.validator';
 
 @Component({
   selector: 'app-product-edit',

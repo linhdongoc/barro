@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IUserSettings } from '../../interfaces/user-settings.inteface';
+import { IUserSettings } from '@app/interfaces/user-settings.inteface';
 import { NgForm, NgModel } from '@angular/forms';
 import { UserSettingsService } from '@app/services/user-settings.service';
 import { Observable } from 'rxjs';
-
 
 @Component({
   selector: 'app-user-settings-form',
