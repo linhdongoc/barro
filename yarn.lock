@@ -1016,6 +1016,13 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.6.4"
 
+"@ngrx/store@10.1.2":
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-10.1.2.tgz#a41aee81ea7b7e4a9f927be560e6024830211efb"
+  integrity sha512-FUjN786ch4Qt9WgJ78ef7Yquq3mPCekgcWgZrs4ycZw1f+KdfTHLTk1bGDtO8A8CzOya5yTT7KhxbdVjbOS5ng==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngtools/webpack@9.1.7":
   version "9.1.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-9.1.7.tgz#4322757b029e1175a3361183c06b31d0576538d8"
@@ -8335,6 +8342,11 @@ tslib@^1.10.0, tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
+tslib@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
+  integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
 
 tslint@^6.1.2:
   version "6.1.2"

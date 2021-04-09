@@ -11,14 +11,33 @@ import { UserSettingsFormComponent } from './modules/user-settings-form/user-set
 import { CustomerComponent } from './modules/customer/customer.component';
 import { ProductEditComponent } from './modules/products/product-edit/product-edit.component';
 import { ProductEditGuard } from './guards/product-edit.guard';
+import { HandsOnRxjsComponent } from '@app/modules/hands-on-rxjs/hands-on-rxjs.component';
 
 const APP_ROUTES: Routes = [
-  { path: '', redirectTo: '/rezepte', pathMatch: 'full' },
-  { path: 'rezepte', component: RecipeComponent, children: RECIPE_ROUTES },
-  { path: 'einkaufsliste', component: ShoppingListComponent },
-  { path: 'udemy', component: DatabindingComponent },
-  { path: 'products', component: ProductListComponent },
-  { path: 'products/:id',
+  {
+    path: '',
+    redirectTo: '/rezepte',
+    pathMatch: 'full'
+  },
+  {
+    path: 'rezepte',
+    component: RecipeComponent,
+    children: RECIPE_ROUTES
+  },
+  {
+    path: 'einkaufsliste',
+    component: ShoppingListComponent
+  },
+  {
+    path: 'udemy',
+    component: DatabindingComponent
+  },
+  {
+    path: 'products',
+    component: ProductListComponent
+  },
+  {
+    path: 'products/:id',
     canActivate: [ProductDetailGuard],
     component: ProductDetailComponent
   },
@@ -27,9 +46,22 @@ const APP_ROUTES: Routes = [
     canDeactivate: [ProductEditGuard],
     component: ProductEditComponent
   },
-  { path: 'usersettings', component: UserSettingsFormComponent },
-  { path: 'customer', component: CustomerComponent },
-  { path: '**', component: PageNotFoundComponent }
+  {
+    path: 'usersettings',
+    component: UserSettingsFormComponent
+  },
+  {
+    path: 'customer',
+    component: CustomerComponent
+  },
+  {
+    path: 'hands-on-rxjs',
+    component: HandsOnRxjsComponent
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

@@ -1,0 +1,30 @@
+<p>hands-on-rxjs works!</p>
+
+<div class="alert alert-primary" role="alert">
+  Aktuell Uhrzeit: {{ currentTime$ | async | date:'HH:mm:ss' }}
+</div>
+
+<div class="mb-3">
+  <input type="text" id="myinput" class="form-control" placeholder="Enter text ...">
+</div>
+
+<div>
+  <app-step-switcher></app-step-switcher>
+  <app-counter></app-counter>
+</div>
+
+<div class="section">
+  <button type="button" class="btn btn-primary btn-lg" id="my-buffer-button">Buffer Button</button>
+</div>
+
+<div>
+  <app-auto-complete></app-auto-complete>
+</div>
+
+<div>
+  <app-merge-map-demo></app-merge-map-demo>
+</div>
+
+<div>
+  <app-merge-scan-demo></app-merge-scan-demo>
+</div>

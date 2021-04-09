@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 // router
 import { routing } from './app-routing.module';
@@ -28,6 +29,12 @@ import { RecipeEditComponent } from './modules/recipe/recipe-edit/recipe-edit.co
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 import { UserSettingsFormComponent } from './modules/user-settings-form/user-settings-form.component';
 import { CustomerComponent } from './modules/customer/customer.component';
+import { HandsOnRxjsComponent } from './modules/hands-on-rxjs/hands-on-rxjs.component';
+import { CounterComponent } from './modules/hands-on-rxjs/counter/counter.component';
+import { StepSwitcherComponent } from './modules/hands-on-rxjs/step-switcher/step-switcher.component';
+import { AutoCompleteComponent } from './modules/hands-on-rxjs/auto-complete/auto-complete.component';
+import { MergeMapDemoComponent } from './modules/hands-on-rxjs/merge-map-demo/merge-map-demo.component';
+import { MergeScanDemoComponent } from './modules/hands-on-rxjs/merge-scan-demo/merge-scan-demo.component';
 
 // directivies
 import { HighlightDirective } from './directives/highlight.directive';
@@ -40,6 +47,13 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { RatingModule } from 'ngx-bootstrap/rating';
+
+// reducers
+import { stepSwitcherReducer } from '@app/modules/hands-on-rxjs/step-switcher/step-switcher.reducer';
+
+const reducers = {
+  stepValue: stepSwitcherReducer
+};
 
 @NgModule({
   declarations: [
@@ -66,6 +80,12 @@ import { RatingModule } from 'ngx-bootstrap/rating';
     PageNotFoundComponent,
     UserSettingsFormComponent,
     CustomerComponent,
+    HandsOnRxjsComponent,
+    CounterComponent,
+    StepSwitcherComponent,
+    AutoCompleteComponent,
+    MergeMapDemoComponent,
+    MergeScanDemoComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +98,8 @@ import { RatingModule } from 'ngx-bootstrap/rating';
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
-    RatingModule.forRoot()
+    RatingModule.forRoot(),
+    StoreModule.forRoot(reducers)
   ],
   bootstrap: [AppComponent]
 })
