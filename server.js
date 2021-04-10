@@ -11,9 +11,14 @@ app.use(function(req, res, next) {
 
 app.use(express.json()); // to support JSON-encoded bodies
 
-
+/*
+* http://127.0.0.1:4001/list-data
+* {"data":[null,null,null,null,null]}
+*
+* http://127.0.0.1:4001/list-data?page=0
+* {"nextIndex":1,"data":[1,2,3,4,5]}
+* */
 let value = 6;
-/* Main routes */
 app.get('/list-data', function(req, res) {
   console.log('Page: ', req.query.page);
 
@@ -35,8 +40,48 @@ app.get('/list-data', function(req, res) {
   }
 });
 
+/*
+* http://127.0.0.1:4001/list-retry-data
+* {"message":"Page not found!"}
+* {"success":true,"data":"Some data from BE"}
+* */
+let count = 0;
+app.get('/list-retry-data', function(req, res) {
+  console.log('count: ', count);
+
+  if (count++ < 3) {
+    res.status(404).send({
+      message: 'Page not found!'
+    });
+    return;
+  }
+
+  count = 0;
+  res.status(200).send({
+    success: true,
+    data: 'Some data from BE'
+  });
+});
+
+/*
+* http://127.0.0.1:4001/list-retrywhen-data
+* {"success":true,"data":[1,2]}
+* {"success":true,"data":[1,2,3]} ...
+* */
+let counter = 3;
+let data = [1,2];
+app.get('/list-retrywhen-data', function(req, res) {
+
+  data = data.concat([counter++]);
+  if (data.length > 10) { data = [1,2]; counter = 3;};
+
+  res.status(200).send({
+    success: true,
+    data: data
+  });
+
+});
+
 app.listen(PORT, function() {
   console.log('Mock back-end is listening on port ' + PORT + '...');
 });
-
-// open browser call url: http://127.0.0.1:4001/list-data?page=0

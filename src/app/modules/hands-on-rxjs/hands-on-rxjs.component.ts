@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  combineLatest,
+  combineLatest, concat,
   defer,
   empty, forkJoin,
   from,
@@ -21,14 +21,14 @@ import {
   buffer,
   bufferCount, bufferTime, bufferToggle, bufferWhen,
   catchError, concatAll,
-  debounceTime,
+  debounceTime, delay,
   distinct,
   distinctUntilChanged,
   distinctUntilKeyChanged,
   filter,
   map, mergeAll, mergeMap, mergeMapTo, mergeScan,
   publish,
-  publishReplay, scan, switchAll,
+  publishReplay, repeat, retry, retryWhen, scan, switchAll,
   switchMap, switchMapTo,
   take, tap, withLatestFrom
 } from 'rxjs/operators';
@@ -75,6 +75,10 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
     // this.concatObserver();
     this.composingObserver();
     // this.forkJoinObserver();
+    // this.retryObserver();
+    // this.repeatObserver();
+
+
   }
 
   // Wird die Seite verlassen, wird die Subscription beendet
@@ -472,6 +476,58 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
       obs => console.log('onNext: ', obs),
       err => console.log('onError: ', err),
       () => console.log('This is how it ends!')
+    )
+  }
+
+  retryObserver() {
+    const getData = () => ajax('http://127.0.0.1:4001/list-retry-data').pipe(
+      retry(4)
+    );
+    getData().subscribe(
+      (data) => console.log('onNext: ', data.response), console.warn
+    );
+
+    const getData1 = (counter) => ajax('http://127.0.0.1:4001/list-retrywhen-data').pipe(
+      retryWhen(
+        error => {
+          // return error.pipe(
+          //   delay(1000),
+          //   take(counter),
+          //   // concat(throwError('Sorry, there was an error (after '+ counter +' retries)'))
+          // )
+
+          console.log('retryWhen callback run: ');
+          return error.pipe(
+            mergeMap((errorMsg, index) => {
+              console.log('index = ', index);
+
+              if (errorMsg.statusCode === 501) {
+                return of(1).pipe(delay(1000 * (index + 1)));
+              }
+
+              return throwError({error: 'Not reachable!'});
+            }),
+            take(counter),
+            // concat(throwError({error: 'Still not reachable after ' + counter + ' retries' }))
+          )
+        }
+      )
+    );
+
+    getData1(5).subscribe(
+      (data) => console.log('onNext handler run: ', data.response),
+      (error) => console.warn('Error handler run: ', error)
+    )
+  }
+
+  repeatObserver() {
+    let counter = 0;
+    const getData = () => defer(() => ajax('http://127.0.0.1:4001/list-data?page=' + counter++ ))
+
+    getData().pipe(
+      repeat(2)
+    ).subscribe(
+      (data) => console.log(data.response), console.warn
     )
   }
 }

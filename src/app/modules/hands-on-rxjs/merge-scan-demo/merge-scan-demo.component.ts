@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { EMPTY, fromEvent, Subscription } from 'rxjs';
-import { mergeScan } from 'rxjs/operators';
+import { concat, defer, EMPTY, fromEvent, Subscription } from 'rxjs';
+import { mergeScan, repeat } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 
 @Component({
@@ -13,11 +13,12 @@ export class MergeScanDemoComponent implements OnInit, OnDestroy {
   @ViewChild('moreButton', { static: true }) moreButton: ElementRef;
   disableMoreButton = false;
   subscription: Subscription;
+  baseUrl = 'http://127.0.0.1:4001/list-data?page=';
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.subscription = this.getItems().subscribe(
+  ngOnInit() {
+    this.subscription = this.getItems(2).subscribe(
       (result: any) => {
         this.items = this.items.concat(result.response.data);
         if (!('nextIndex' in result.response)) {
@@ -31,20 +32,30 @@ export class MergeScanDemoComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  getItems() {
-    const baseUrl = 'http://127.0.0.1:4001/list-data?page=';
+  getItems(prefetchPages: number) {
+    const initialData = this.getInitialData(prefetchPages);
     const fetchMoreEvent = fromEvent(this.moreButton.nativeElement, 'click');
 
-    return fetchMoreEvent.pipe(
+    const moreItems = fetchMoreEvent.pipe(
       mergeScan((preAjaxRes, next) => {
           if ('nextIndex' in preAjaxRes.response) {
-            return ajax.get(baseUrl + preAjaxRes.response.nextIndex)
+            return ajax.get(this.baseUrl + preAjaxRes.response.nextIndex)
           }
           return EMPTY;
         },
-        { response: { nextIndex: 1 }}, // Initial acc value
+        { response: { nextIndex: prefetchPages }}, // Initial acc value
         1 // Maximum concurrency, 1 - to prevent race conditions
       )
-    );
+    )
+
+    return concat(initialData, moreItems);
+  }
+
+  getInitialData(prefetchPages: number) {
+    let counter = 0;
+    return defer(() => ajax.get(this.baseUrl + counter++))
+      .pipe(
+        repeat(prefetchPages)
+      );
   }
 }

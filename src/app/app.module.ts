@@ -39,6 +39,7 @@ import { ConcatMapDemoComponent } from './modules/hands-on-rxjs/concat-map-demo/
 import { CitySwitcherComponent } from './modules/hands-on-rxjs/city-switcher/city-switcher.component';
 import { CoefficientSwitcherComponent } from './modules/hands-on-rxjs/coefficient-switcher/coefficient-switcher.component';
 import { PriceComponent } from './modules/hands-on-rxjs/price/price.component';
+import { RepeatWhenDemoComponent } from './modules/hands-on-rxjs/repeat-when-demo/repeat-when-demo.component';
 
 // directivies
 import { HighlightDirective } from './directives/highlight.directive';
@@ -98,6 +99,7 @@ const reducers = {
     CitySwitcherComponent,
     CoefficientSwitcherComponent,
     PriceComponent,
+    RepeatWhenDemoComponent,
   ],
   imports: [
     BrowserModule,
