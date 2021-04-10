@@ -10,7 +10,7 @@ import { ajax } from 'rxjs/ajax';
 })
 export class MergeScanDemoComponent implements OnInit, OnDestroy {
   items: number[] = [1,2,3,4,5];
-  @ViewChild('moreButton') moreButton: ElementRef;
+  @ViewChild('moreButton', { static: true }) moreButton: ElementRef;
   disableMoreButton = false;
   subscription: Subscription;
 
@@ -33,7 +33,6 @@ export class MergeScanDemoComponent implements OnInit, OnDestroy {
 
   getItems() {
     const baseUrl = 'http://127.0.0.1:4001/list-data?page=';
-    // TODO: not working
     const fetchMoreEvent = fromEvent(this.moreButton.nativeElement, 'click');
 
     return fetchMoreEvent.pipe(

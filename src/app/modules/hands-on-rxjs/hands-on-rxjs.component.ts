@@ -1,9 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { defer, empty, from, fromEvent, interval, Observable, Observer, of, pipe, range, Subject, Subscription, throwError, timer } from 'rxjs';
+import {
+  combineLatest,
+  defer,
+  empty, forkJoin,
+  from,
+  fromEvent,
+  interval,
+  Observable,
+  Observer,
+  of,
+  pipe,
+  range,
+  Subject,
+  Subscription,
+  throwError,
+  timer,
+  zip
+} from 'rxjs';
 import {
   buffer,
   bufferCount, bufferTime, bufferToggle, bufferWhen,
-  catchError,
+  catchError, concatAll,
   debounceTime,
   distinct,
   distinctUntilChanged,
@@ -13,9 +30,10 @@ import {
   publish,
   publishReplay, scan, switchAll,
   switchMap, switchMapTo,
-  take, tap
+  take, tap, withLatestFrom
 } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
+import { HandsOnRxjsService } from '@app/services/hands-on-rxjs.service';
 
 @Component({
   selector: 'app-hands-on-rxjs',
@@ -26,8 +44,19 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
   dateSubscription: Subscription;
   currentDate: Date;
   currentTime$: Observable<Date>;
+  url1 = 'http://127.0.0.1:4001/list-data?page=0';  // {"nextIndex":1,"data":[1,2,3,4,5]}
+  url2 = 'http://127.0.0.1:4001/list-data?page=1';  // {"nextIndex":2,"data":[6,7,8,9,10]}
+  url3 = 'http://127.0.0.1:4001/list-data?page=2';  // {"nextIndex":3,"data":[11,12,13,14,15]}
+  url4 = 'http://127.0.0.1:4001/list-data?page=3';  // {"data":[16,17,18,19,20]}
+  url5 = 'http://127.0.0.1:4001/list-data?page=4';  // {"data":[21,22,23,24,25]}
+  url6 = 'http://127.0.0.1:4001/list-data?page=5';  // {"data":[26,27,28,29,30]}
+  url7 = 'http://127.0.0.1:4001/list-data?page=6';  // {"data":[31,32,33,34,35]}
+  widgetsVisibility = false;
+  citiesObject: any = {};
+  coefficientsList: number[] = [];
 
-  constructor() { }
+  constructor(private handsOnRxjsService: HandsOnRxjsService) {
+  }
 
   ngOnInit(): void {
     // this.createObserver();
@@ -43,7 +72,9 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
     // this.bufferObserver();
     // this.switchObserver();
     // this.mergeObserver();
-
+    // this.concatObserver();
+    this.composingObserver();
+    // this.forkJoinObserver();
   }
 
   // Wird die Seite verlassen, wird die Subscription beendet
@@ -96,6 +127,7 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
     function ObservableFactory(n) {
       return of(n)
     }
+
     let counter = 0;
     const source = defer(() => ObservableFactory(counter++));
     source.subscribe(
@@ -227,7 +259,7 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
     interval(500).pipe(
       take(4),
       map(x => {
-        if (x === 2) throw { code: 404, message: 'not found' }
+        if (x === 2) throw {code: 404, message: 'not found'}
         return x;
       }),
       catchError(err => of(100))
@@ -245,7 +277,7 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
       err => console.log('distinct error: ', err)
     );
 
-    from([{v:1}, {v:2}, {v:2}, {v:3}]).pipe(
+    from([{v: 1}, {v: 2}, {v: 2}, {v: 3}]).pipe(
       // distinctUntilChanged()
       // distinctUntilChanged((prev, next) => prev.v === next.v)
       // distinctUntilChanged(null, (item) => item.v)
@@ -256,7 +288,7 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
       err => console.log('distinct error: ', err)
     );
 
-    from([{v:1}, {v:2}, {v:2}, {v:3}, {v:2}]).pipe(
+    from([{v: 1}, {v: 2}, {v: 2}, {v: 3}, {v: 2}]).pipe(
       // distinct((item) => item.v)
       distinctUntilKeyChanged('v')
     ).subscribe(
@@ -266,7 +298,7 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
   }
 
   scanObserver() {
-    from([1,2,3,4,5]).pipe(
+    from([1, 2, 3, 4, 5]).pipe(
       scan((acc, next) => acc + next, 0),
       map((x, index) => x / (index + 1))
     ).subscribe(
@@ -305,15 +337,7 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
   }
 
   switchObserver() {
-    const url1 = 'http://127.0.0.1:4001/list-data?page=0';  // {"nextIndex":1,"data":[1,2,3,4,5]}
-    const url2 = 'http://127.0.0.1:4001/list-data?page=1';  // {"nextIndex":2,"data":[6,7,8,9,10]}
-    const url3 = 'http://127.0.0.1:4001/list-data?page=2';  // {"nextIndex":3,"data":[11,12,13,14,15]}
-    const url4 = 'http://127.0.0.1:4001/list-data?page=3';  // {"data":[16,17,18,19,20]}
-    const url5 = 'http://127.0.0.1:4001/list-data?page=4';  // {"data":[21,22,23,24,25]}
-    const url6 = 'http://127.0.0.1:4001/list-data?page=5';  // {"data":[26,27,28,29,30]}
-    const url7 = 'http://127.0.0.1:4001/list-data?page=6';  // {"data":[31,32,33,34,35]}
-
-    // from([url1, url2, url3]).pipe(
+    // from([this.url1, this.url2, this.url3]).pipe(
     //   map(url => ajax(url))
     // ).subscribe(
     //   innerObservable => {
@@ -332,40 +356,122 @@ export class HandsOnRxjsComponent implements OnInit, OnDestroy {
     //   err => console.log('onError: ', err)
     // );
 
-    // from([url1, url2, url3]).pipe(
-    //   map(url => ajax(url)),
-    //   switchAll()
-    //
-    //   // switchMap(url => ajax(url))
-    //   switchMapTo(ajax(url6))
-    // ).subscribe(
-    //   res => console.log('onNext: ', res.response.data), // [11, 12, 13, 14, 15]
-    //   err => console.log('onError: ', err)
-    // )
+    from([this.url1, this.url2, this.url3]).pipe(
+      // map(url => ajax(url)),
+      // switchAll()  // [Observable1, Observable2, Observable3]
+
+      switchMap(url => ajax(url)) // Observable3
+
+      // switchMapTo(ajax(this.url6)) // Observable6
+    ).subscribe(
+      res => console.log('onNext: ', res.response.data), // [11, 12, 13, 14, 15]
+      err => console.log('onError: ', err)
+    )
   }
 
   mergeObserver() {
-    const url1 = 'http://127.0.0.1:4001/list-data?page=0';  // {"nextIndex":1,"data":[1,2,3,4,5]}
-    const url2 = 'http://127.0.0.1:4001/list-data?page=1';  // {"nextIndex":2,"data":[6,7,8,9,10]}
-    const url3 = 'http://127.0.0.1:4001/list-data?page=2';  // {"nextIndex":3,"data":[11,12,13,14,15]}
-    const url4 = 'http://127.0.0.1:4001/list-data?page=3';  // {"data":[16,17,18,19,20]}
-    const url5 = 'http://127.0.0.1:4001/list-data?page=4';  // {"data":[21,22,23,24,25]}
-    const url6 = 'http://127.0.0.1:4001/list-data?page=5';  // {"data":[26,27,28,29,30]}
-    const url7 = 'http://127.0.0.1:4001/list-data?page=6';  // {"data":[31,32,33,34,35]}
+    // from([this.url1, this.url2, this.url3]).pipe(
+    //   // map(url => ajax(url)),
+    //   // mergeAll()
+    //
+    //   // mergeMap(url => ajax(url))
+    //
+    //   // mergeMap(url => ajax(url), null, 1)
+    //
+    //   // mergeMapTo(ajax(this.url7))
+    //   mergeScan((acc, url) => ajax(url), null, 1)
+    // ).subscribe(
+    //   obs => console.log('onNext: ', obs.response.data),
+    //   err => console.log('onError: ', err)
+    // )
 
-    from([url1, url2, url3]).pipe(
-      // map(url => ajax(url)),
-      // mergeAll()
+    const getItemsIds = () => of([1, 2, 3, 4, 5, 6, 7, 8]); // emits whole array as one value [1,2,3,4,5,6,7,8]
+    // getItemsIds().pipe(
+    //   mergeAll()
+    // ).subscribe(
+    //   obs => console.log('onNext: ', obs), // emits each item as separate value 1..2..3..4..5..6..7..8
+    //   err => console.log('onError: ', err)
+    // )
 
-      // mergeMap(url => ajax(url))
+    const deleteFromDB = (chuckIds) => {
+      console.log('Ids to delete: ', chuckIds);
+      // return ajax.post('http://some_url/delete', { id })
+      return of({success: true, ids: chuckIds})
+    }
+    getItemsIds().pipe(
+      mergeAll(), // emits one by one 1..2..3..4....8
+      bufferCount(2,2), // emits [1,2], [3,4] ... [7,8]
+      mergeMap(chunckIds => deleteFromDB(chunckIds))
+    ).subscribe(
+      obs => console.log('Deleted data: ', obs),
+      err => console.log('onError: ', err)
+    )
+  }
 
-      // mergeMap(url => ajax(url), null, 1)
-
-      // mergeMapTo(ajax(url7))
-      mergeScan((acc, url) => ajax(url), null, 1)
+  concatObserver() {
+    from([this.url1, this.url2, this.url3]).pipe(
+      map(url => ajax(url)),
+      concatAll()
     ).subscribe(
       obs => console.log('onNext: ', obs.response.data),
       err => console.log('onError: ', err)
+    )
+  }
+
+  composingObserver() {
+    // const age$ = of(27, 25, 29);
+    // const name$ = of('Foo', 'Bar', 'Beer');
+    // const isDev$ = of(true, true, false)
+    //
+    // zip(age$, name$, isDev$).pipe(
+    //   map((age, name, isDev) => ({ age, name, isDev }))
+    // ).subscribe(
+    //   obs => console.log('onNext: ', obs),
+    //   err => console.log('onError: ', err)
+    // )
+
+    // let counter1 = 0;
+    // let counter2 = 10;
+    // const observable1 = interval(800).pipe(
+    //   map(() => {
+    //     console.log('Source1: ', counter1);
+    //     return counter1++;
+    //   }),
+    //   take(2)
+    // ); // emits 0..1
+    // const observable2 = interval(1000).pipe(
+    //   map(() => {
+    //     console.log('Source2: ', counter2);
+    //     return counter2++;
+    //   }),
+    //   take(2)
+    // ); // emits 10..11
+    // combineLatest(observable1, observable2).subscribe(
+    //   value => console.log('combine latest emits: ', value)
+    // )
+
+    const citiesObject = this.handsOnRxjsService.getCitiesInfo();
+    const coefficientsList = this.handsOnRxjsService.getTaxCoefficients();
+    zip(citiesObject, coefficientsList)
+      .pipe(take(1))
+      .subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
+        ([citiesObject, coefficientsList]) => {
+          this.widgetsVisibility = true;
+          this.citiesObject = citiesObject;
+          this.coefficientsList = coefficientsList;
+        }
+      )
+  }
+
+  forkJoinObserver() {
+    forkJoin(
+      interval(1000).pipe(take(3)), // emit 0, 1, 2 every second and complete
+      interval(500).pipe(take(4)),  // emti 0, 1, 2, 3 every half a second and complete
+    ).subscribe(
+      obs => console.log('onNext: ', obs),
+      err => console.log('onError: ', err),
+      () => console.log('This is how it ends!')
     )
   }
 }

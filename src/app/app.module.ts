@@ -35,6 +35,10 @@ import { StepSwitcherComponent } from './modules/hands-on-rxjs/step-switcher/ste
 import { AutoCompleteComponent } from './modules/hands-on-rxjs/auto-complete/auto-complete.component';
 import { MergeMapDemoComponent } from './modules/hands-on-rxjs/merge-map-demo/merge-map-demo.component';
 import { MergeScanDemoComponent } from './modules/hands-on-rxjs/merge-scan-demo/merge-scan-demo.component';
+import { ConcatMapDemoComponent } from './modules/hands-on-rxjs/concat-map-demo/concat-map-demo.component';
+import { CitySwitcherComponent } from './modules/hands-on-rxjs/city-switcher/city-switcher.component';
+import { CoefficientSwitcherComponent } from './modules/hands-on-rxjs/coefficient-switcher/coefficient-switcher.component';
+import { PriceComponent } from './modules/hands-on-rxjs/price/price.component';
 
 // directivies
 import { HighlightDirective } from './directives/highlight.directive';
@@ -50,9 +54,13 @@ import { RatingModule } from 'ngx-bootstrap/rating';
 
 // reducers
 import { stepSwitcherReducer } from '@app/modules/hands-on-rxjs/step-switcher/step-switcher.reducer';
+import { citySwitcherReducer } from '@app/modules/hands-on-rxjs/city-switcher/city-switcher.reducer';
+import { coefficientSwitcherReducer } from '@app/modules/hands-on-rxjs/coefficient-switcher/coefficient-switcher.reducer';
 
 const reducers = {
-  stepValue: stepSwitcherReducer
+  stepValue: stepSwitcherReducer,
+  cityPrice: citySwitcherReducer,
+  coefficient: coefficientSwitcherReducer
 };
 
 @NgModule({
@@ -86,6 +94,10 @@ const reducers = {
     AutoCompleteComponent,
     MergeMapDemoComponent,
     MergeScanDemoComponent,
+    ConcatMapDemoComponent,
+    CitySwitcherComponent,
+    CoefficientSwitcherComponent,
+    PriceComponent,
   ],
   imports: [
     BrowserModule,
