@@ -3,14 +3,21 @@
 ![Build CI](https://github.com/linhdongoc/barro/workflows/Build%20CI/badge.svg?branch=master)
 
 ### System
+~~~
 angular cli 9.1.7
 typescript 3.8.3
 webpack 4.42.0
 rxjs 6.5.5
+~~~
 
 ### Development server
 ~~~
 ng serve
+~~~
+
+### Express server
+~~~
+node server.js
 ~~~
 
 ### Code scaffolding
